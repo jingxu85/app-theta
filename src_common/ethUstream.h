@@ -69,6 +69,12 @@ typedef struct txContent_t {
     txInt256_t gasprice;
     txInt256_t startgas;
     txInt256_t value;
+    uint8_t thetaTX[150];
+    uint8_t thetaTXLength;
+    uint8_t thetaTXtoken;
+    uint32_t thetaCurrentFieldLength;
+    bool thetaCurrentFieldIsList;
+    uint32_t thetaCurrentFieldPos;
     uint8_t destination[20];
     uint8_t destinationLength;
     uint8_t v[4];

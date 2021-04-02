@@ -26,6 +26,9 @@ int handle_get_printable_amount(get_printable_amount_parameters_t* params, chain
     if (params->is_fee) {
         uint8_t ticker_len = strnlen(config->coinName, sizeof(config->coinName));
         memcpy(ticker, config->coinName, ticker_len);
+        // uint8_t ticker_len = strnlen(config->coinName, sizeof(config->coinName)) + 1;
+        // memcpy(ticker, config->coinName, ticker_len - 1);
+        // ticker[ticker_len - 1] = '#';
         ticker[ticker_len] = ' ';
         ticker[ticker_len + 1] = '\0';
         decimals = WEI_TO_ETHER;

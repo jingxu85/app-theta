@@ -682,7 +682,8 @@ void app_exit() {
 
 void init_coin_config(chain_config_t *coin_config) {
     memset(coin_config, 0, sizeof(chain_config_t));
-    strcpy(coin_config->coinName, CHAINID_COINNAME " ");
+    strcpy(coin_config->coinName, CHAINID_COINNAME1 " ");
+    strcpy(coin_config->coinName2, CHAINID_COINNAME2 " ");
     coin_config->chainId = CHAIN_ID;
     coin_config->kind = CHAIN_KIND;
 }
@@ -712,7 +713,7 @@ void coin_main(chain_config_t *coin_config) {
 
                 if (N_storage.initialized != 0x01) {
                     internalStorage_t storage;
-                    storage.dataAllowed = 0x00;
+                    storage.dataAllowed = 0x01;
                     storage.contractDetails = 0x00;
                     storage.initialized = 0x01;
                     nvm_write((void *) &N_storage, (void *) &storage, sizeof(internalStorage_t));

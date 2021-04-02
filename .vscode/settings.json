@@ -1,0 +1,19 @@
+{
+    "files.associations": {
+        "random": "c",
+        "*.tcc": "c",
+        "cmath": "c",
+        "tuple": "c",
+        "typeinfo": "c",
+        "handle_get_printable_amount.h": "c",
+        "algorithm": "c",
+        "string_view": "c",
+        "ostream": "c",
+        "ethutils.h": "c",
+        "shared_context.h": "c",
+        "ui_callbacks.h": "c",
+        "utils.h": "c",
+        "eth_plugin_handler.h": "c",
+        "ethustream.h": "c"
+    }
+}

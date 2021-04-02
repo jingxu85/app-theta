@@ -21,54 +21,28 @@ endif
 
 include $(BOLOS_SDK)/Makefile.defines
 
-DEFINES_LIB = USE_LIB_ETHEREUM
 APP_LOAD_PARAMS= --curve secp256k1 $(COMMON_LOAD_PARAMS)
-# Allow the app to use path 45 for multi-sig (see BIP45).
-APP_LOAD_PARAMS += --path "45'"
-# Samsung temporary implementation for wallet ID on 0xda7aba5e/0xc1a551c5
-#APP_LOAD_PARAMS += --path "1517992542'/1101353413'"
-
 APPVERSION_M=1
-APPVERSION_N=6
-APPVERSION_P=4
+APPVERSION_N=0
+APPVERSION_P=0
 APPVERSION=$(APPVERSION_M).$(APPVERSION_N).$(APPVERSION_P)
-APP_LOAD_FLAGS= --appFlags 0x240 --dep Ethereum:$(APPVERSION)
+APP_LOAD_FLAGS= --appFlags 0x240
 
-ifeq ($(CHAIN),)
-CHAIN=ethereum
-endif
-
-ifeq ($(CHAIN),ethereum)
 APPNAME = "THETA"
-# Lock the application on its standard path for 1.5. Please complain if non compliant
+# Lock the application on its standard path
 APP_LOAD_PARAMS += --path "44'/1777'"
 # APP_LOAD_PARAMS += --path "44'/60'"
-DEFINES += CHAINID_UPCASE=\"ETHEREUM\" CHAINID_COINNAME=\"ETH\" CHAIN_KIND=CHAIN_KIND_ETHEREUM CHAIN_ID=0
+DEFINES += CHAINID_UPCASE=\"THETA\" CHAINID_COINNAME1=\"THETA\" CHAINID_COINNAME2=\"TFUEL\" CHAIN_KIND=CHAIN_KIND_ETHEREUM CHAIN_ID=0
 # Starkware integration
 APP_LOAD_PARAMS += --path "2645'/579218131'" 
 DEFINES += HAVE_STARKWARE
 DEFINES += STARK_BIP32_PATH_0=0x80000A55 STARK_BIP32_PATH_1=0xA2862AD3 
-ifeq ($(TARGET_NAME), TARGET_NANOX)
-# Allow to derive ETH 2 public keys
-APP_LOAD_PARAMS += --path "12381/3600" --curve bls12381g1 
-DEFINES += HAVE_ETH2
-endif
-DEFINES_LIB=
-APP_LOAD_FLAGS=--appFlags 0xa40
-else
-ifeq ($(filter clean,$(MAKECMDGOALS)),)
-$(error Unsupported CHAIN - use ethereum, ropsten, ethereum_classic, expanse, poa, artis_sigma1, artis_tau1, rsk, rsk_testnet, ubiq, wanchain, kusd, musicoin, pirl, akroma, atheios, callisto, ethersocial, ellaism, ether1, ethergem, gochain, mix, reosc, hpb, tomochain, tobalaba, dexon, volta, ewc, webchain, thundercore)
-endif
-endif
-
-APP_LOAD_PARAMS += $(APP_LOAD_FLAGS) --path "44'/1'"
-DEFINES += $(DEFINES_LIB)
 
 #prepare hsm generation
 ifeq ($(TARGET_NAME), TARGET_NANOX)
-ICONNAME=icons/nanox_app_$(CHAIN).gif
+ICONNAME=icons/nanox_app_theta.gif
 else
-ICONNAME=icons/nanos_app_$(CHAIN).gif
+ICONNAME=icons/nanos_app_theta.gif
 endif
 
 ################
@@ -115,21 +89,22 @@ DEFINES   += IO_SEPROXYHAL_BUFFER_SIZE_B=72
 endif
 
 # Enabling debug PRINTF
-DEBUG:=0
-ifneq ($(DEBUG),0)
-DEFINES += HAVE_STACK_OVERFLOW_CHECK
-ifeq ($(TARGET_NAME),TARGET_NANOX)
-DEFINES   += HAVE_PRINTF PRINTF=mcu_usb_printf
-else
-DEFINES   += HAVE_PRINTF PRINTF=screen_printf
-endif
-else
-DEFINES   += PRINTF\(...\)=
-endif
+DEFINES += HAVE_SPRINTF HAVE_PRINTF PRINTF=screen_printf
+# DEBUG:=0
+# ifneq ($(DEBUG),0)
+# DEFINES += HAVE_STACK_OVERFLOW_CHECK
+# ifeq ($(TARGET_NAME),TARGET_NANOX)
+# DEFINES   += HAVE_PRINTF PRINTF=mcu_usb_printf
+# else
+# DEFINES   += HAVE_PRINTF PRINTF=screen_printf
+# endif
+# else
+# DEFINES   += PRINTF\(...\)=
+# endif
 
-ifneq ($(NOCONSENT),)
-DEFINES   += NO_CONSENT
-endif
+# ifneq ($(NOCONSENT),)
+# DEFINES   += NO_CONSENT
+# endif
 
 #DEFINES   += HAVE_TOKENS_LIST # Do not activate external ERC-20 support yet
 
@@ -183,6 +158,3 @@ include $(BOLOS_SDK)/Makefile.rules
 
 #add dependency on custom makefile filename
 dep/%.d: %.c Makefile
-
-listvariants:
-	@echo VARIANTS CHAIN ethereum ropsten ethereum_classic expanse poa rsk rsk_testnet ubiq wanchain pirl akroma atheios callisto ethersocial ether1 gochain musicoin ethergem mix ellaism reosc hpb tomochain dexon volta ewc thundercore

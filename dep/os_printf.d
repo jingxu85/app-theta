@@ -43,4 +43,40 @@ obj/os_printf.o: \
   /home/jingxu/workspace/ledgerApp/nanos-secure-sdk/include/lcx_crc.h \
   /home/jingxu/workspace/ledgerApp/nanos-secure-sdk/include/lcx_math.h \
   /home/jingxu/workspace/ledgerApp/nanos-secure-sdk/include/cx_compliance_141.h \
-  /home/jingxu/workspace/ledgerApp/nanos-secure-sdk/include/syscalls.h
+  /home/jingxu/workspace/ledgerApp/nanos-secure-sdk/include/syscalls.h \
+  /home/jingxu/workspace/ledgerApp/nanos-secure-sdk/include/os_io_seproxyhal.h \
+  /home/jingxu/workspace/ledgerApp/nanos-secure-sdk/include/seproxyhal_protocol.h \
+  /home/jingxu/workspace/ledgerApp/nanos-secure-sdk/lib_ux/include/ux.h \
+  /home/jingxu/workspace/ledgerApp/nanos-secure-sdk/lib_ux/include/ux_layouts.h \
+  /home/jingxu/workspace/ledgerApp/nanos-secure-sdk/include/bagl.h \
+  /home/jingxu/workspace/ledgerApp/nanos-secure-sdk/lib_ux/include/ux_flow_engine.h \
+  src/glyphs.h \
+  /home/jingxu/workspace/ledgerApp/nanos-secure-sdk/lib_u2f/include/u2f_service.h \
+  /home/jingxu/workspace/ledgerApp/clang+llvm-8.0.0-x86_64-linux-gnu-ubuntu-18.04/lib/clang/8.0.0/include/stdbool.h \
+  /home/jingxu/workspace/ledgerApp/nanos-secure-sdk/lib_stusb/STM32_USB_Device_Library/Core/Inc/usbd_def.h \
+  /home/jingxu/workspace/ledgerApp/nanos-secure-sdk/lib_stusb/usbd_conf.h \
+  /usr/include/stdio.h /usr/include/bits/types/__fpos_t.h \
+  /usr/include/bits/types/__mbstate_t.h \
+  /usr/include/bits/types/__fpos64_t.h /usr/include/bits/types/__FILE.h \
+  /usr/include/bits/types/FILE.h /usr/include/bits/types/struct_FILE.h \
+  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+  /usr/include/stdlib.h /usr/include/bits/waitflags.h \
+  /usr/include/bits/waitstatus.h /usr/include/bits/floatn.h \
+  /usr/include/bits/floatn-common.h /usr/include/sys/types.h \
+  /usr/include/bits/types/clock_t.h /usr/include/bits/types/clockid_t.h \
+  /usr/include/bits/types/time_t.h /usr/include/bits/types/timer_t.h \
+  /usr/include/endian.h /usr/include/bits/endian.h \
+  /usr/include/bits/endianness.h /usr/include/bits/byteswap.h \
+  /usr/include/bits/uintn-identity.h /usr/include/sys/select.h \
+  /usr/include/bits/select.h /usr/include/bits/types/sigset_t.h \
+  /usr/include/bits/types/__sigset_t.h \
+  /usr/include/bits/types/struct_timeval.h \
+  /usr/include/bits/types/struct_timespec.h \
+  /usr/include/bits/pthreadtypes.h \
+  /usr/include/bits/thread-shared-types.h \
+  /usr/include/bits/pthreadtypes-arch.h /usr/include/bits/struct_mutex.h \
+  /usr/include/bits/struct_rwlock.h /usr/include/alloca.h \
+  /usr/include/bits/stdlib-float.h \
+  /home/jingxu/workspace/ledgerApp/nanos-secure-sdk/lib_stusb/STM32_USB_Device_Library/Core/Inc/usbd_core.h \
+  /home/jingxu/workspace/ledgerApp/nanos-secure-sdk/lib_stusb/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h \
+  /home/jingxu/workspace/ledgerApp/nanos-secure-sdk/lib_stusb/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h

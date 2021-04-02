@@ -74,6 +74,24 @@ void copyTxData(txContext_t *context, uint8_t *out, uint32_t length) {
     }
 }
 
+void decodeThetaData(txContext_t *context, uint8_t *out, uint32_t length) {
+    if (context->commandLength < length) {
+        PRINTF("copyTxData Underflow\n");
+        THROW(EXCEPTION);
+    }
+
+    context->content->thetaTXLength = length;
+    memmove(context->content->thetaTX, context->workBuffer, length);
+    if (!(context->processingField && context->fieldSingleByte)) {
+        cx_hash((cx_hash_t *) context->sha3, 0, context->workBuffer, length, NULL, 0);
+    }
+    context->workBuffer += length;
+    context->commandLength -= length;
+    if (context->processingField) {
+        context->currentFieldPos += length;
+    }
+}
+
 static void processContent(txContext_t *context) {
     // Keep the full length for sanity checks, move to the next field
     if (!context->currentFieldIsList) {
@@ -217,6 +235,22 @@ static void processData(txContext_t *context) {
     if (context->currentFieldPos < context->currentFieldLength) {
         uint32_t copySize =
             MIN(context->commandLength, context->currentFieldLength - context->currentFieldPos);
+        decodeThetaData(context, NULL, copySize);
+    }
+    if (context->currentFieldPos == context->currentFieldLength) {
+        context->currentField++;
+        context->processingField = false;
+    }
+}
+
+static void processRS(txContext_t *context) {
+    if (context->currentFieldIsList) {
+        PRINTF("Invalid type for RLP_DATA\n");
+        THROW(EXCEPTION);
+    }
+    if (context->currentFieldPos < context->currentFieldLength) {
+        uint32_t copySize =
+            MIN(context->commandLength, context->currentFieldLength - context->currentFieldPos);
         copyTxData(context, NULL, copySize);
     }
     if (context->currentFieldPos == context->currentFieldLength) {
@@ -351,9 +385,11 @@ static parserStatus_e processTxInternal(txContext_t *context) {
                     processTo(context);
                     break;
                 case TX_RLP_DATA:
+                    processData(context);
+                    break;
                 case TX_RLP_R:
                 case TX_RLP_S:
-                    processData(context);
+                    processRS(context);
                     break;
                 case TX_RLP_V:
                     processV(context);

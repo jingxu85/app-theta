@@ -43,4 +43,4 @@ obj/ethUtils.o: \
   /home/jingxu/workspace/ledgerApp/nanos-secure-sdk/include/lcx_math.h \
   /home/jingxu/workspace/ledgerApp/nanos-secure-sdk/include/cx_compliance_141.h \
   /home/jingxu/workspace/ledgerApp/nanos-secure-sdk/include/syscalls.h \
-  src_common/ethUtils.h src/chainConfig.h
+  src_common/ethUtils.h src/chainConfig.h src_common/ethUstream.h

@@ -186,34 +186,34 @@ void reportFinalizeError(bool direct) {
 
 void computeFees(char *displayBuffer, uint32_t displayBufferSize) {
     uint256_t gasPrice, startGas, uint256;
-    uint8_t *feeTicker = (uint8_t *) PIC(chainConfig->coinName);
+    uint8_t *feeTicker = (uint8_t *) PIC(chainConfig->coinName2);
     uint8_t tickerOffset = 0;
-    uint32_t i;
+    uint32_t i, j;
 
     PRINTF("Max fee\n");
-    PRINTF("Gasprice %.*H\n",
-           tmpContent.txContent.gasprice.length,
-           tmpContent.txContent.gasprice.value);
-    PRINTF("Startgas %.*H\n",
-           tmpContent.txContent.startgas.length,
-           tmpContent.txContent.startgas.value);
-    convertUint256BE(tmpContent.txContent.gasprice.value,
-                     tmpContent.txContent.gasprice.length,
-                     &gasPrice);
-    convertUint256BE(tmpContent.txContent.startgas.value,
-                     tmpContent.txContent.startgas.length,
-                     &startGas);
-    mul256(&gasPrice, &startGas, &uint256);
-    tostring256(&uint256, 10, (char *) (G_io_apdu_buffer + 100), 100);
-    i = 0;
-    while (G_io_apdu_buffer[100 + i]) {
-        i++;
-    }
-    adjustDecimals((char *) (G_io_apdu_buffer + 100),
-                   i,
-                   (char *) G_io_apdu_buffer,
-                   100,
-                   WEI_TO_ETHER);
+    // PRINTF("Gasprice %.*H\n",
+    //        tmpContent.txContent.gasprice.length,
+    //        tmpContent.txContent.gasprice.value);
+    // PRINTF("Startgas %.*H\n",
+    //        tmpContent.txContent.startgas.length,
+    //        tmpContent.txContent.startgas.value);
+    // convertUint256BE(tmpContent.txContent.gasprice.value,
+    //                  tmpContent.txContent.gasprice.length,
+    //                  &gasPrice);
+    // convertUint256BE(tmpContent.txContent.startgas.value,
+    //                  tmpContent.txContent.startgas.length,
+    //                  &startGas);
+    // mul256(&gasPrice, &startGas, &uint256);
+    // tostring256(&uint256, 10, (char *) (G_io_apdu_buffer + 100), 100);
+    // i = 0;
+    // while (G_io_apdu_buffer[100 + i]) {
+    //     i++;
+    // }
+    // adjustDecimals((char *) (G_io_apdu_buffer + 100),
+    //                i,
+    //                (char *) G_io_apdu_buffer,
+    //                100,
+    //                WEI_TO_ETHER);
     i = 0;
     tickerOffset = 0;
     memset(displayBuffer, 0, displayBufferSize);
@@ -221,11 +221,20 @@ void computeFees(char *displayBuffer, uint32_t displayBufferSize) {
         displayBuffer[tickerOffset] = feeTicker[tickerOffset];
         tickerOffset++;
     }
-    while (G_io_apdu_buffer[i]) {
-        displayBuffer[tickerOffset + i] = G_io_apdu_buffer[i];
-        i++;
-    }
-    displayBuffer[tickerOffset + i] = '\0';
+    tickerOffset--;
+    displayBuffer[tickerOffset + 1] = '0';
+    displayBuffer[tickerOffset + 2] = '.';
+    displayBuffer[tickerOffset + 3] = '0';
+    displayBuffer[tickerOffset + 4] = '0';
+    displayBuffer[tickerOffset + 5] = '0';
+    displayBuffer[tickerOffset + 6] = '0';
+    displayBuffer[tickerOffset + 7] = '0';
+    displayBuffer[tickerOffset + 8] = '1';
+    // while (G_io_apdu_buffer[i]) {
+    //     displayBuffer[tickerOffset + i] = G_io_apdu_buffer[i];
+    //     i++;
+    // }
+    displayBuffer[tickerOffset + 9] = '\0';
 }
 
 void finalizeParsing(bool direct) {
@@ -327,6 +336,13 @@ void finalizeParsing(bool direct) {
         reportFinalizeError(direct);
         if (!direct) {
             return;
+        }
+    }
+    // Decode Theta Tx
+    if (genericUI) {
+        getThetaTxFromBinary(&txContext, &global_sha3, chainConfig);
+        if (txContext.content->thetaTXtoken == 1) {
+            ticker = (uint8_t *) PIC(chainConfig->coinName2);
         }
     }
     // Prepare destination address to display
