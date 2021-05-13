@@ -30,8 +30,7 @@ APP_LOAD_FLAGS= --appFlags 0x240
 
 APPNAME = "THETA"
 # Lock the application on its standard path
-APP_LOAD_PARAMS += --path "44'/1777'"
-# APP_LOAD_PARAMS += --path "44'/60'"
+APP_LOAD_PARAMS += --path "44'/500'"
 DEFINES += CHAINID_UPCASE=\"THETA\" CHAINID_COINNAME1=\"THETA\" CHAINID_COINNAME2=\"TFUEL\" CHAIN_KIND=CHAIN_KIND_ETHEREUM CHAIN_ID=0
 # Starkware integration
 APP_LOAD_PARAMS += --path "2645'/579218131'" 
